@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:sushi_app/components/button.dart';
 import 'package:sushi_app/components/food_tile.dart';
-import 'package:sushi_app/models/food.dart';
+import 'package:sushi_app/models/shop.dart';
+import 'package:sushi_app/pages/food_details.dart';
 
 // ignore: camel_case_types
 class menu_page extends StatefulWidget {
@@ -13,51 +15,26 @@ class menu_page extends StatefulWidget {
 }
 
 class _menu_pageState extends State<menu_page> {
-  List foodmenu = [
-    Food(
-        name: "Salmon Sushi",
-        price: "21.00",
-        imagepath: "assets/images/sushi (3).png",
-        rating: "4.9"),
-    Food(
-        name: "Tuna",
-        price: "25.00",
-        imagepath: "assets/images/sushi (1).png",
-        rating: "4.9"),
-    Food(
-        name: "Ramen",
-        price: "30.00",
-        imagepath: "assets/images/ramen.png",
-        rating: "5"),
-    Food(
-        name: "soup",
-        price: "5",
-        imagepath: "assets/images/Soup.png",
-        rating: "3.9"),
-    Food(
-        name: "Sukiyaki",
-        price: "50",
-        imagepath: "assets/images/Sukiyaki.png",
-        rating: "4.5"),
-    Food(
-        name: "Takoyaki",
-        price: "25.00",
-        imagepath: "assets/images/Takoyaki.png",
-        rating: "4.2"),
-    Food(
-        name: "Tendon",
-        price: "3.00",
-        imagepath: "assets/images/tendon.png",
-        rating: "3"),
-    Food(
-        name: "Udon",
-        price: "8.00",
-        imagepath: "assets/images/udon.png",
-        rating: "4.9"),
-  ];
+  //navigate to food details
+  void navigatetofood(int index) {
+    final shop = context.read<Shop>();
+    final foodmenu = shop.foodmenu;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FoodListDetails(
+          food: foodmenu[index],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final shop = context.read<Shop>();
+    final foodmenu = shop.foodmenu;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 10,
         toolbarHeight: 40,
@@ -144,14 +121,14 @@ class _menu_pageState extends State<menu_page> {
             height: 15,
           ),
           const Padding(
-            padding: EdgeInsets.only(left: 25),
+            padding: EdgeInsets.only(left: 30),
             child: Text(
               "Food menu",
               style: TextStyle(fontSize: 18),
             ),
           ),
           const SizedBox(
-            height: 10,
+            height: 5,
           ),
           Expanded(
             flex: 1,
@@ -161,13 +138,14 @@ class _menu_pageState extends State<menu_page> {
                 scrollDirection: Axis.horizontal,
                 itemCount: foodmenu.length,
                 itemBuilder: (context, index) => FoodTile(
+                  onTap: () => navigatetofood(index),
                   food: foodmenu[index],
                 ),
               ),
             ),
           ),
           const SizedBox(
-            height: 25,
+            height: 15,
           ),
           Container(
             margin: const EdgeInsets.only(left: 25, right: 25, bottom: 25),
