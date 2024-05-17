@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:sushi_app/components/button.dart';
 import 'package:sushi_app/models/food.dart';
+import 'package:sushi_app/models/shop.dart';
 
 class FoodListDetails extends StatefulWidget {
   final Food food;
@@ -27,6 +29,37 @@ class _FoodListDetailsState extends State<FoodListDetails> {
   incrementquantity() {
     setState(() {
       quantity++;
+    });
+  }
+
+  void addtocart() {
+    if (quantity > 0) {
+      final shop = context.read<Shop>();
+      shop.addtocart(widget.food, quantity);
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) => AlertDialog(
+          backgroundColor: Colors.grey,
+          content: const Padding(
+            padding: EdgeInsets.only(left: 25, top: 15),
+            child: Text(
+              "Successfully added to cart",
+              style: TextStyle(fontSize: 15),
+            ),
+          ),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.done))
+          ],
+        ),
+      );
+    }
+    setState(() {
+      quantity = 0;
     });
   }
 
@@ -182,10 +215,12 @@ class _FoodListDetailsState extends State<FoodListDetails> {
                     padding: const EdgeInsets.only(bottom: 20),
                     child: MyButton(
                         text: "Add to Cart",
-                        onTap: () {},
+                        onTap: () {
+                          addtocart();
+                        },
                         width: 320,
                         height: 60),
-                  )
+                  ),
                 ],
               ),
             ),

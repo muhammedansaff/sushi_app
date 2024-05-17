@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sushi_app/components/button.dart';
 import 'package:sushi_app/components/food_tile.dart';
 import 'package:sushi_app/models/shop.dart';
+import 'package:sushi_app/pages/cart.dart';
 import 'package:sushi_app/pages/food_details.dart';
 
 // ignore: camel_case_types
@@ -36,6 +37,18 @@ class _menu_pageState extends State<menu_page> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MYcart(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.add_shopping_cart))
+        ],
         elevation: 10,
         toolbarHeight: 40,
         backgroundColor: Colors.grey.shade200,
