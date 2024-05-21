@@ -1,0 +1,1 @@
+ C:\\Users\\ANSAF\\Desktop\\flutter\\sushi_app\\.dart_tool\\flutter_build\\bd02a7ac4c44cf8ce5236bb17e51fe7d\\native_assets.yaml: 
